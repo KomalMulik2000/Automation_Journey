@@ -5,13 +5,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import pages.*;
 
 public class TestBase {
 
 	public static WebDriver driver;
 	public static Properties prop;
+	public static Timeouts timeouts;
 	
 	public TestBase(){
 		// Properties 
@@ -27,21 +31,44 @@ public class TestBase {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
 		TestBase testBase = new TestBase(); 
 		String browserName  = prop.getProperty("browser");
 		if(browserName.equals("chrome")) {
-			 System.setProperty("webdriver.chrome.driver", "D:\\Git\\Automation_Journey\\src\\driver\\chromedriver.exe");
+			 System.setProperty("webdriver.chrome.driver", prop.getProperty("chromeDriverPath"));
 			 driver = new ChromeDriver();
 		}
 		
 		 driver.manage().window().maximize();
 		 driver.manage().deleteAllCookies();
-		 driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(utils.PAGE_LOAD_TIMEOUT));
-		 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
+		 
+		 // Store the Timeouts object
+		 timeouts = driver.manage().timeouts();
+		 timeouts.pageLoadTimeout(Duration.ofSeconds(utils.PAGE_LOAD_TIMEOUT));
+		 timeouts.implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
 		 
 		 driver.get(prop.getProperty("url"));
+		 
+		 
+		 homePage homePageObj = new homePage();
+		 homePageObj.searchProduct();
+		 
+		 searchResultPage searchPageObj = new searchResultPage();
+		 searchPageObj.storeData();
+		 searchPageObj.goToFirstPage();
+		 searchPageObj.selectFirstProduct();
+		 
+		 utils.switchToNewTab();
+		 
+		 productDetailPage productDetailPageObj = new productDetailPage();
+		 productDetailPageObj.addProductToCart();
+		 
+		 cartPage cartPageObj = new cartPage();
+		 cartPageObj.takeCartScreenshot();
+		 
+		 driver.quit();
+		 
 	}
 	
 }
