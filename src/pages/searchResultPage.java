@@ -40,6 +40,7 @@ public class searchResultPage extends TestBase {
             	List<WebElement> allProducts = driver.findElements(products);
             	
             	for(WebElement product : allProducts) {
+            		try {
             		  String productNameText = product.findElement(productName).getText();
             		  String productPriceText = product.findElement(productPrice).getText();
                       String productBrandText = product.findElement(brand).getText();
@@ -48,7 +49,9 @@ public class searchResultPage extends TestBase {
                       dataRow.createCell(0).setCellValue(productNameText);
                       dataRow.createCell(1).setCellValue(productPriceText);
                       dataRow.createCell(2).setCellValue(productBrandText);
-                     
+            		}catch(NoSuchElementException e) {
+            			System.out.println("Element not found: "+ e.getMessage());
+            		}
             	}
             	
             	if(page < 3) {
@@ -59,7 +62,7 @@ public class searchResultPage extends TestBase {
             
 			workbook.write(fileOut);
 		}catch(IOException e) {
-			e.printStackTrace();
+			System.out.println("File related issue: " + e.getMessage());
 		}
 	}
 	

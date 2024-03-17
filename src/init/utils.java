@@ -1,8 +1,10 @@
 package init;
 
 import java.io.File;
+
 import java.time.Duration;
 import java.util.Set;
+
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,7 +15,7 @@ import org.openqa.selenium.WebElement;
 public class utils extends TestBase{
 
 	public static long PAGE_LOAD_TIMEOUT = 20;
-	public static long IMPLICIT_WAIT = 30;
+	public static long IMPLICIT_WAIT = 40;
 	
 	public static void switchToNewTab() {
 		// Get the current window handle
@@ -52,5 +54,6 @@ public class utils extends TestBase{
 	}
 
 	
+
 	
 }
