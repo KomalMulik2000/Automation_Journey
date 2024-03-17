@@ -16,9 +16,9 @@ import init.utils;
 public class searchResultPage extends TestBase {
 	
 	By products = By.xpath("//div[@class='_1xHGtK _373qXS']");
-	By productName = By.xpath("//div[@class='_1xHGtK _373qXS']//a[@title]");
-	By productPrice = By.xpath("//div[@class='_1xHGtK _373qXS']//a[@title]//following-sibling::a//div[@class='_30jeq3']");
-	By brand = By.xpath("//div[@class='_1xHGtK _373qXS']//div[@class='_2WkVRV']");
+	By productName = By.xpath(".//a[@title]");
+	By productPrice = By.xpath(".//a[@title]//following-sibling::a//div[@class='_30jeq3']");
+	By brand = By.xpath(".//div[@class='_2WkVRV']");
 	
 	By nextPageLink = By.xpath("//a[span[text()='Next']]");
 	
@@ -51,9 +51,10 @@ public class searchResultPage extends TestBase {
                      
             	}
             	
-            	driver.findElement(nextPageLink).click();
-            	timeouts.implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
-            	
+            	if(page < 3) {
+	            	driver.findElement(nextPageLink).click();
+	            	timeouts.implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
+            	}
             }
             
 			workbook.write(fileOut);
