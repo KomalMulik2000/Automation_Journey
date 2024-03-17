@@ -3,6 +3,7 @@ package pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import init.TestBase;
 import init.utils;
@@ -14,7 +15,10 @@ public class productDetailPage extends TestBase {
 		timeouts.implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
 		selectSize();
 		timeouts.implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
-		driver.findElement(addToCartButton).click();
+		WebElement addCart_btn = driver.findElement(addToCartButton);
+		utils.scrollToTheElement(addCart_btn);
+		timeouts.implicitlyWait(Duration.ofSeconds(utils.IMPLICIT_WAIT));
+		addCart_btn.click();
 	}
 	
 	By size = By.xpath("//a[text()='M']");
